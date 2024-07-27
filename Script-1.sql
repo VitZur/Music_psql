@@ -17,4 +17,4 @@ where name not like '% %';
 
 select title
 from tracks 
-where title like '%мой%' or title like '%my%';
+where  lower(title) like '%мой%' or  lower(title) like '%my%';
