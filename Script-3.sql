@@ -2,7 +2,7 @@ select a.title
 from albums a
 join artist_album aa on a.id = aa.album_id 
 join artist_genre ag on aa.artist_id = ag.artist_id 
-group by a.title 
+group by a.id,a.title 
 having count(distinct ag.genre_id)>1;
 
 
@@ -23,6 +23,13 @@ WHERE t.duration = (
 select a.title 
 from albums a
 join tracks t on a.id = t.album_id 
-group by a.title 
-order by count(t.id)
-limit 1;
+group by a.title,a.id 
+having count(t.id) = (
+	select min(track_count)
+	from (
+			select count(t.id) as track_count
+			from albums a
+			join tracks t on a.id = t.album_id 
+			group by a.id
+		) subquery
+);
