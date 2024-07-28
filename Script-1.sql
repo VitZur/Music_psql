@@ -15,6 +15,10 @@ select name
 from artists 
 where name not like '% %';
 
-select title
-from tracks 
-where  lower(title) like '%мой%' or  lower(title) like '%my%';
+SELECT DISTINCT word
+FROM (
+    SELECT regexp_split_to_table(lower(title), '\s+') AS word
+    FROM tracks
+) AS words
+WHERE word LIKE '%мой%' OR word LIKE '%my%';
+
