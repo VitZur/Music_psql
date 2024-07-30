@@ -17,8 +17,8 @@ where name not like '% %';
 
 SELECT DISTINCT word
 FROM (
-    SELECT regexp_split_to_table(lower(title), '\s+') AS word
+    SELECT unnest(string_to_array(lower(title), ' ')) AS word
     FROM tracks
 ) AS words
-WHERE word LIKE '%мой%' OR word LIKE '%my%';
+WHERE word = 'мой' OR word = 'my';
 
