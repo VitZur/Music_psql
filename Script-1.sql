@@ -15,10 +15,14 @@ select name
 from artists 
 where name not like '% %';
 
-SELECT DISTINCT word
-FROM (
-    SELECT unnest(string_to_array(lower(title), ' ')) AS word
-    FROM tracks
-) AS words
-WHERE word = 'мой' OR word = 'my';
+SELECT title
+FROM tracks
+WHERE lower(title) ILIKE 'my %'
+   OR lower(title) ILIKE '% my'
+   OR lower(title) ILIKE '% my %'
+   OR lower(title) = 'my'
+   OR lower(title) ILIKE 'мой %'
+   OR lower(title) ILIKE '% мой'
+   OR lower(title) ILIKE '% мой %'
+   OR lower(title) = 'мой';
 
